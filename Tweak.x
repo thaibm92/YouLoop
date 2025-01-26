@@ -9,6 +9,7 @@
 #import "../YouTubeHeader/YTMainAppVideoPlayerOverlayView.h"
 #import "../YouTubeHeader/YTMainAppControlsOverlayView.h"
 #import "../YouTubeHeader/YTPlayerViewController.h"
+#import "../YouTubeHeader/QTMIcon.h"
 
 #define TweakKey @"YouLoop"
 #define IS_ENABLED(k) [[NSUserDefaults standardUserDefaults] boolForKey:k]
