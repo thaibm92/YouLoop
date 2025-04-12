@@ -28,6 +28,27 @@ jobs:
           sparse-checkout: iPhoneOS18.0.sdk
           path: theos/sdks
 
+      - name: Checkout PoomSmart/YouTubeHeader
+        uses: actions/checkout@main
+        with:
+          repository: PoomSmart/YouTubeHeader
+          ref: main
+          path: YouTubeHeader
+
+      - name: Checkout PoomSmart/YTVideoOverlay
+        uses: actions/checkout@main
+        with:
+          repository: PoomSmart/YTVideoOverlay
+          ref: main
+          path: YTVideoOverlay
+
+      - name: Checkout PoomSmart/PSHeader
+        uses: actions/checkout@main
+        with:
+          repository: PoomSmart/PSHeader
+          ref: master
+          path: PSHeader
+      
       - name: Update Theos
         run: |
           export THEOS=$(pwd)/theos
