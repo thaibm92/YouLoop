@@ -2,14 +2,14 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 
-#import "../YTVideoOverlay/Header.h"
-#import "../YTVideoOverlay/Init.x"
-#import "../YouTubeHeader/YTColor.h"
-#import "../YouTubeHeader/YTMainAppVideoPlayerOverlayViewController.h"
-#import "../YouTubeHeader/YTMainAppVideoPlayerOverlayView.h"
-#import "../YouTubeHeader/YTMainAppControlsOverlayView.h"
-#import "../YouTubeHeader/YTPlayerViewController.h"
-#import "../YouTubeHeader/QTMIcon.h"
+#import <YTVideoOverlay/Header>
+#import <YTVideoOverlay/Init.x"
+#import <YouTubeHeader/YTColor>
+#import <YouTubeHeader/YTMainAppVideoPlayerOverlayViewController>
+#import <YouTubeHeader/YTMainAppVideoPlayerOverlayView>
+#import <YouTubeHeader/YTMainAppControlsOverlayView>
+#import <YouTubeHeader/YTPlayerViewController>
+#import <YouTubeHeader/QTMIcon>
 
 #define TweakKey @"YouLoop"
 #define IS_ENABLED(k) [[NSUserDefaults standardUserDefaults] boolForKey:k]
