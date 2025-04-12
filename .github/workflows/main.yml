@@ -1,0 +1,75 @@
+# This has been created by @lillieH1000
+
+name: Build the YouLoop
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  build:
+    name: YouLoop
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Checkout RootHide/theos
+        uses: actions/checkout@main
+        with:
+          repository: RootHide/theos
+          ref: master
+          submodules: recursive
+          path: theos
+
+      - name: Checkout thaibm92/sdks
+        uses: actions/checkout@main
+        with:
+          repository: thaibm92/sdks
+          ref: master
+          sparse-checkout: iPhoneOS18.0.sdk
+          path: theos/sdks
+          
+      - name: Checkout PoomSmart/YouTubeHeader
+        uses: actions/checkout@main
+        with:
+          repository: PoomSmart/YouTubeHeader
+          ref: main
+          path: YouTubeHeader
+
+      - name: Checkout PoomSmart/PSHeader
+        uses: actions/checkout@main
+        with:
+          repository: PoomSmart/PSHeader
+          ref: master
+          path: PSHeader
+
+      - name: Update Theos
+        run: |
+          export THEOS=$(pwd)/theos
+          $THEOS/bin/update-theos
+
+      - name: Build Package 
+        id: build_package
+        run: |
+          brew install make xz ldid 
+          export THEOS=theos
+          gmake clean package FINALPACKAGE=1
+          PACKAGE_VERSION=$(grep '^PACKAGE_VERSION' Makefile | cut -d' ' -f3)
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "==> Built v$PACKAGE_VERSION Successfully."
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: packages/*.deb
+          
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2.0.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRAFT: ${{ inputs.create_release }}
+        with:
+          tag_name: v${{ steps.build_package.outputs.PACKAGE_VERSION }}
+          name: v${{ steps.build_package.outputs.PACKAGE_VERSION }}
+          files: packages/*.deb
+          draft: ${{ env.DRAFT }}
